@@ -12,12 +12,16 @@ library(readr)
 library(RColorBrewer)
 library(EBImage)
 
+
+
 pal = colorRampPalette(c("blue", "red"))
 
-totalReads = read_rds('../totalReads.rds')
-totalGenes = read_rds('../totalGenes.rds')
-clusterMat = read_rds('../clusterMat.rds')
-spots = read_rds('../spots.rds')
+gitURL = 'https://raw.githubusercontent.com/LieberInstitute/SpatialTissueLocator/master/data'
+
+totalReads = as.matrix(read_csv(file.path(gitURL, 'totalReads.csv')))
+totalGenes = as.matrix(read_csv(file.path(gitURL, 'totalGenes.csv'))) 
+clusterMat = as.matrix(read_csv(file.path(gitURL, 'clusterMat.csv')))
+spots = read_csv(file.path(gitURL, 'spots.csv'))
 xlims = list()
 xlims$C1 = c(-5, 5)
 xlims$C2 = c(-5, 5)
@@ -51,7 +55,7 @@ shinyServer(function(input, output, session) {
   output$tissuePlot <- renderPlot({
     
     imName = input$image
-    im = readImage(paste0('../', imName, '_histology_small.jpg'))
+    im = readImage(file.path(gitURL, paste0(imName, '_histology_small.png')))
     if (input$metric=="K-means clusters (k=2)") {
       x = clusterMat[,imName]
       cols = x
