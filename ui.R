@@ -35,17 +35,46 @@ shinyUI(fluidPage(
       checkboxInput("log",
                     label="Log2",
                     value=FALSE),
-       sliderInput("thresh",
-                   "Threshold",
-                   min = 0,
-                   max = 0,
-                   value = 0)
+      
+      sliderInput("thresh",
+                  "Threshold",
+                  min = 0,
+                  max = 0,
+                  value = 0),
+      plotOutput("histPlot")
     ),
     
     # Show a plot of the generated distribution
     mainPanel(
-       plotOutput("tissuePlot"),
-       plotOutput("histPlot")
+      tags$div(sliderInput("scale",
+                  "Scale Tissue",
+                  min = 0,
+                  max = 20,
+                  value = 10,
+                  step = 0.1),
+                  style="display: inline-block;vertical-align:top"),
+      tags$div(style="display: inline-block;vertical-align:top; width: 20px;",HTML("<br>")),
+      tags$div(sliderInput("translate.x",
+                  "Translate Tissue: x",
+                  min = -5,
+                  max = 5,
+                  value = 0,
+                  step = 0.1),
+                  style="display: inline-block;vertical-align:top"),
+      tags$div(style="display: inline-block;vertical-align:top; width: 20px;",HTML("<br>")),
+      tags$div(sliderInput("translate.y",
+                  "Translate Tissue: y",
+                  min = -5,
+                  max = 5,
+                  value = 0,
+                  step = 0.1),
+                  style="display: inline-block;vertical-align:top"),
+      #tags$div(style="display: inline-block;vertical-align:top; width: 20px;",HTML("<br>")),
+      #tags$div(actionButton("save",
+      #                    "Save Scale and Translation Values"),
+      #         style="display: inline-block;vertical-align:top"),
+      plotOutput("tissuePlot", height="800px")
+       
     )
   )
 ))
